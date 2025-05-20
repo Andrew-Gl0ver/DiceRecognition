@@ -9,5 +9,5 @@ This project uses a custom-trained YOLOv8 model to detect and count dice in real
 
 ## Model
 Trained with YOLOv8 on Roboflow  
-[Dataset Link: ](https://universe.roboflow.com/dice-recognition-wmx1i/dice-detection-q9dhl/model)
+[🔗 Dataset Link On Roboflfow 🔗](https://universe.roboflow.com/dice-recognition-wmx1i/dice-detection-q9dhl/model)
 
