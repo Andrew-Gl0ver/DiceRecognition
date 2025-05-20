@@ -5,7 +5,7 @@ from ultralytics import YOLO
 model = YOLO("insert here")
 
 # Open webcam
-# -------------
+# -----------
 
 # Calculate and display total
 
