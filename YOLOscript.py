@@ -20,6 +20,8 @@ has_scanned = False
 prev_gray = None
 dice_settled = False
 STILLNESS_LEVEL = 1000
+STILLNESS_DURATION = 2
+stopped_moving_time = None
 
 while webcam.isOpened():
     ret, image = webcam.read()
@@ -35,19 +37,27 @@ while webcam.isOpened():
         movement = compare_images(prev_gray, gray_image)
 
         if movement < STILLNESS_LEVEL:
-            dice_settled = True
+            if stopped_moving_time is None:
+                stopped_moving_time = time.time()
+
+            time_elapsed = time.time() - stopped_moving_time
+            if time_elapsed >= STILLNESS_DURATION:
+                dice_settled = True
+            else:
+                dice_settled = False
         else:
+            # if dice start moving again, reset
+            stopped_moving_time = None
             dice_settled = False
+            has_scanned = False
 
     prev_gray = gray_image.copy()
 
     if dice_settled and not has_scanned:
         has_scanned = True
 
-        # run YOLO
+        # run YOLO and draw image boxes
         results = model(image)
-
-        # Draw boxes and get dice classes
         total = 0
         for result in results:
             for box in result.boxes:
